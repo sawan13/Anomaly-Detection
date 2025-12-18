@@ -221,8 +221,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Sawan Kumar Makwana**
 - GitHub: [@sawan13](https://github.com/sawan13)
-- LinkedIn: [Your LinkedIn Profile]
-- Email: your.email@example.com
+- Email: sawankumar.makwana@gmail.com
 
 ---
 
