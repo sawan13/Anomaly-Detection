@@ -1,0 +1,8 @@
+Requested features: rms, std, skewness, peak_to_peak, qcd, kurtosis
+Previous features: rms, std, variance, crest_factor, peak_to_peak
+
+Overlap: peak_to_peak, rms, std
+
+Per-dataset summary saved to: d:\Anomaly dataset\requested_features_summary_by_dataset.csv
+Correlation matrix saved to: d:\Anomaly dataset\feature_correlation.csv
+Plotting failed: No module named 'matplotlib'

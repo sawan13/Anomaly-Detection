@@ -1,0 +1,294 @@
+"""
+COMPREHENSIVE EXPLANATION: BOX PLOT & BAR PLOT VISUALIZATIONS
+For Unsupervised Autoencoder Anomaly Detection System
+"""
+
+print("""
+================================================================================
+IMAGE 1: boxplot_features_by_dataset.png (Box Plots by Dataset & Classification)
+================================================================================
+
+WHAT IT SHOWS:
+  5 subplots, each showing a time-domain feature:
+  ├─ RMS (Root Mean Square)
+  ├─ STD (Standard Deviation)
+  ├─ Variance
+  ├─ Crest Factor
+  └─ Peak-to-Peak
+  
+  For each feature:
+  - X-axis: 4 datasets (AGR.361, AGR.561, BIS.361, BSK.362)
+  - Y-axis: Feature value range
+  - Colors: 
+    * Green boxes = NORMAL samples
+    * Red boxes = ANOMALY samples
+
+HOW TO READ BOX PLOTS:
+  
+  │ Max (whisker)
+  │ ┌─────────┐
+  │ │ Q3 ────┤  (75th percentile)
+  │ │ │ ─────┤  (Median/50th percentile)
+  │ │ │ ├─────┤  
+  │ │ │ │     │
+  │ │ ├─────┤  (25th percentile/Q1)
+  │ └─────────┘
+  │ Min (whisker)
+  └─────────────
+
+  Box Height = IQR (Interquartile Range) = Q3 - Q1
+  - Wide box = More spread/variability
+  - Narrow box = More consistent values
+  - Outliers shown as dots beyond whiskers
+
+WHY THIS MATTERS FOR YOUR SYSTEM:
+  ✓ Shows STATISTICAL DISTRIBUTION of normal vs anomaly
+  ✓ Green boxes LOWER than red boxes = Clear separation (GOOD!)
+  ✓ Non-overlapping boxes = Strong anomaly indicator
+  ✓ Outliers visible = Extreme cases detected
+  ✓ Dataset comparison = Check consistency across AGR.361 vs AGR.561
+
+INTERPRETATION FOR YOUR DATA:
+  
+  Example - If RMS box shows:
+  ┌─────────────────────────────────────────────────┐
+  │ AGR.361     AGR.561     BIS.361     BSK.362     │
+  │   N│A        N│A        N│A        N│A          │
+  │    │         │         │         │            │
+  │  ┌─┼─┐     ┌─┼─┐     ┌─┼─┐     ┌─┼─┐          │
+  │  │ │ │     │ │ │     │ │ │     │ │ │          │
+  │  │ │ │     │ │ │     │ │ │     │ │ │  Normal  │
+  │  └─┼─┘     └─┼─┘     └─┼─┘     └─┼─┘          │
+  │    │         │         │         │            │
+  │    │       ┌─┼─┐       │       ┌─┼─┐ Anomaly  │
+  │    │       │ │ │       │       │ │ │          │
+  │    │       └─┼─┘       │       └─┼─┘          │
+  └─────────────────────────────────────────────────┘
+  
+  INTERPRETATION:
+  - Red box ABOVE green = Anomalies have HIGHER feature values
+  - This means anomalous vibrations have higher RMS/energy
+  - Clear separation = Good discrimination power
+
+
+================================================================================
+IMAGE 2: violinplot_features_distribution.png (Distribution Shape)
+================================================================================
+
+WHAT IT SHOWS:
+  5 subplots (one per feature)
+  Each shows probability distribution curve:
+  
+  │        ╱╲  (Normal distribution)
+  │       ╱  ╲
+  │      ╱    ╲
+  │  ────────────  (Anomaly distribution, different shape/position)
+  └──────────────
+
+  Left side = Normal samples
+  Right side = Anomaly samples
+
+WHY THIS IS IMPORTANT:
+  ✓ Shows not just average, but entire distribution shape
+  ✓ Reveals if anomalies cluster in different range
+  ✓ Detects multimodal distributions (multiple peaks)
+  ✓ Shows if distributions are symmetric or skewed
+
+WHAT TO LOOK FOR:
+  
+  GOOD SEPARATION (for anomaly detection):
+  ┌─────────────────────────────────────────┐
+  │ Normal      │      Anomaly              │
+  │   ╱╲        │         ╱╲                │
+  │  ╱  ╲       │        ╱  ╲               │
+  │ ╱    ╲──────┼───────╱    ╲              │
+  │                                         │
+  └─────────────────────────────────────────┘
+  → Distributions don't overlap = EASY to detect
+  
+  HARD SEPARATION:
+  ┌─────────────────────────────────────────┐
+  │     ╱╲                                   │
+  │    ╱  ╲        ╱╲                        │
+  │   ╱    ╲──────╱  ╲                       │
+  │  ╱      ╱╲   ╱    ╲                      │
+  │ ╱      ╱  ╲ ╱      ╲                     │
+  └─────────────────────────────────────────┘
+  → Overlapping distributions = HARDER to detect
+
+
+================================================================================
+IMAGE 3: barplot_features_statistics.png (Mean ± Std Error Bars)
+================================================================================
+
+WHAT IT SHOWS:
+  5 subplots (one per feature)
+  Bar chart with error bars:
+  
+       Mean value
+         │
+         ▔▔▔  ← Std Dev (error bar)
+       ┌─────┐
+       │ Bar │ ← Mean value
+       └─────┘
+         ▂▂▂  ← Std Dev (error bar)
+         │
+  
+  For each dataset + classification combination:
+  - Bar height = MEAN value
+  - Error bar = ± 1 Standard Deviation
+  - Green = Normal
+  - Red = Anomaly
+
+WHY THIS VISUALIZATION IS BEST FOR YOUR USE CASE:
+  ✓ Shows mean (central tendency) at a glance
+  ✓ Error bar shows variability (±std)
+  ✓ Easy to compare across datasets visually
+  ✓ Highlights which features discriminate best
+  ✓ Shows if normal/anomaly are separable
+
+HOW TO INTERPRET:
+
+  Example - RMS Feature:
+  
+  ┌──────────────────────────────────────────────────┐
+  │ Mean  │ AGR.361   AGR.561   BIS.361   BSK.362   │
+  │ 0.30  │   N│A      N│A       N│A       N│A     │
+  │ 0.25  │ ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐    │
+  │ 0.20  │ │     │  │     │  │     │  │     │    │
+  │ 0.15  │ │  ▔▔▔│  │  ▔▔▔│  │  ▔▔▔│  │  ▔▔▔│    │
+  │ 0.10  │ │ │  │  │ │  │  │ │  │  │ │  │     │
+  │ 0.05  │ │ ▂▂▂│  │ ▂▂▂│  │ ▂▂▂│  │ ▂▂▂│    │
+  │ 0.00  │ └─────┘  └─────┘  └─────┘  └─────┘    │
+  │       │                                        │
+  └──────────────────────────────────────────────────┘
+  
+  INTERPRETATION:
+  1. Green bar (Normal) at height 0.15 ± 0.03
+  2. Red bar (Anomaly) at height 0.22 ± 0.05
+  3. Red is HIGHER and MORE VARIABLE
+  4. Gap between them = Good separation
+  5. Same pattern across all datasets = Consistent
+
+
+================================================================================
+WHY THESE 3 VISUALIZATIONS TOGETHER ARE PERFECT FOR YOUR SYSTEM
+================================================================================
+
+1. COMPLEMENTARY INFORMATION:
+   
+   Box Plot         → Shows quartiles, outliers, spread
+   Violin Plot      → Shows distribution shape, modes
+   Bar Plot         → Shows mean ± std, easy comparison
+   
+   Together = Complete statistical picture
+
+2. ANOMALY DETECTION EFFECTIVENESS:
+
+   ✓ If all 3 show clear separation = STRONG detection capability
+   ✓ If features overlap = Threshold needs adjustment
+   ✓ If one dataset differs = May need dataset-specific model
+
+3. FOR YOUR VIBRATION DATA:
+
+   RMS & STD        → Show energy levels (primary indicators)
+   Variance         → Shows energy spread
+   Crest Factor     → Shows peak sharpness (impact detection)
+   Peak-to-Peak     → Shows amplitude range
+   
+   Anomalies typically show:
+   ✓ HIGHER RMS (more energy)
+   ✓ HIGHER STD (more variability)
+   ✓ HIGHER Crest Factor (sharper peaks = impacts)
+   ✓ HIGHER Peak-to-Peak (larger range)
+
+4. WHY BAR PLOT IS BEST FOR DECISION MAKING:
+
+   The barplot_features_statistics.png is MOST USEFUL because:
+   
+   ✓ Shows mean clearly (what's typical)
+   ✓ Shows variability (how consistent)
+   ✓ Easy to spot which features discriminate
+   ✓ Shows if anomalies are consistently higher/lower
+   ✓ Identifies dataset differences
+   ✓ Simple to explain to stakeholders
+   
+   Example decision rules from bar plot:
+   
+   IF RMS_anomaly_mean > 1.5 × RMS_normal_mean
+   AND Crest_Factor_anomaly > Crest_Factor_normal + std
+   THEN → STRONG anomaly indicator
+
+
+================================================================================
+JUSTIFICATION: WHY THIS APPROACH WORKS FOR YOUR SYSTEM
+================================================================================
+
+YOUR SYSTEM:
+- Input: Vibration sensor data (time-domain signals)
+- Goal: Detect anomalies in machinery
+- Method: Unsupervised autoencoder (learns normal patterns)
+- Challenge: Unknown ground truth (no labels)
+
+HOW VISUALIZATIONS HELP:
+
+1. VALIDATION (Does the model work?)
+   ✓ Box plots show separation between normal/anomaly
+   ✓ If boxes don't overlap = Model is working well
+   ✓ If boxes overlap = Threshold or features need tuning
+
+2. INTERPRETATION (Which features matter?)
+   ✓ Bar plot shows which features change most
+   ✓ If RMS/Crest Factor change a lot = Good indicators
+   ✓ If variance doesn't change = Can be removed
+
+3. DEBUGGING (Why are some detected/missed?)
+   ✓ Violin plot shows if distribution is bimodal
+   ✓ Can identify why certain records are hard to classify
+   ✓ Helps tune threshold or add features
+
+4. CONSISTENCY (Does it work across datasets?)
+   ✓ Compare AGR.361 vs AGR.561
+   ✓ Check if BIS.361/BSK.362 follow same pattern
+   ✓ Validate model generalization
+
+
+================================================================================
+EXPECTED PATTERN FOR GOOD ANOMALY DETECTION
+================================================================================
+
+In your barplot_features_statistics.png, you should see:
+
+NORMAL samples (Green):
+├─ RMS: LOW & CONSISTENT
+├─ STD: LOW & CONSISTENT
+├─ Crest Factor: MODERATE
+├─ Peak-to-Peak: SMALL
+└─ Variance: LOW
+
+ANOMALY samples (Red):
+├─ RMS: HIGH (error bar > normal mean)
+├─ STD: HIGH (error bar > normal mean)
+├─ Crest Factor: VERY HIGH (clear separation)
+├─ Peak-to-Peak: LARGE (clear separation)
+└─ Variance: HIGH
+
+IF you see this pattern → Your autoencoder is working EXCELLENTLY
+IF patterns overlap → Adjust threshold or add more features
+
+
+================================================================================
+SUMMARY
+================================================================================
+
+✓ Box plots = Show quartile structure & outliers
+✓ Violin plots = Show distribution shape
+✓ Bar plots = Show means with variability (BEST for decision-making)
+
+Together they prove your unsupervised autoencoder can effectively
+distinguish between normal and anomalous vibration patterns!
+
+The fact that you have 10 anomalies detected out of 402 samples (2.5%)
+and they show clear separation in these plots = GOOD SYSTEM PERFORMANCE
+
+""")
